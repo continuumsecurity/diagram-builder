@@ -3,6 +3,7 @@ package org.vaadin.diagrambuilder;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vaadin.annotations.JavaScript;
 
 import org.vaadin.diagrambuilder.client.DiagramBuilderClientRpc;
 import org.vaadin.diagrambuilder.client.DiagramBuilderServerRpc;
@@ -23,6 +24,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@JavaScript("vaadin://widgetsets/app.widgetset/diagram-builder/js/diagram/alloyui/build/aui/aui.js")
+
+// Also we can use "app://" path, for example:
+//@JavaScript("app://../VAADIN/alloyui/build/aui/aui.js")
+//@StyleSheet("app://../VAADIN/alloyui/css/alloyui-bootstrap.css")
 public class DiagramBuilder extends com.vaadin.ui.AbstractComponent {
 
     private NodeType[] availableFields;
