@@ -6,6 +6,9 @@ import com.vaadin.ui.JavaScriptFunction;
 
 import org.vaadin.diagrambuilder.domain.Node;
 import org.vaadin.diagrambuilder.dto.NodeDto;
+import org.vaadin.diagrambuilder.listener.GroupDragEndListener;
+import org.vaadin.diagrambuilder.listener.GroupDragStartListener;
+import org.vaadin.diagrambuilder.listener.GroupRightClickListener;
 import org.vaadin.diagrambuilder.listener.TaskDragEndListener;
 import org.vaadin.diagrambuilder.listener.TaskDragStartListener;
 import org.vaadin.diagrambuilder.listener.TaskRightClickListener;
@@ -24,6 +27,10 @@ public class NodeEvent {
     private ArrayList<TaskDragStartListener> taskDragStartListeners = new ArrayList<>();
     private ArrayList<TaskDragEndListener> taskDragEndListeners = new ArrayList<>();
 
+    private ArrayList<GroupRightClickListener> groupRightClickListeners = new ArrayList<>();
+    private ArrayList<GroupDragStartListener> groupDragStartListeners = new ArrayList<>();
+    private ArrayList<GroupDragEndListener> groupDragEndListeners = new ArrayList<>();
+
     private String eventId;
 
     public NodeEvent() {
@@ -36,37 +43,50 @@ public class NodeEvent {
 
     public void createRightClickEvent() {
         com.vaadin.ui.JavaScript.getCurrent().addFunction(Node.ON_RIGHT_CLICK_JAVASCRIPT + this.eventId, (JavaScriptFunction) jsonArray -> {
-            fireEvent(jsonArray, NodeEvent.this::fireTaskRightClickListener);
+            String type = jsonArray.getObject(0).getString("type");
+
+            if (type.equals("task")) {
+                fireEvent(jsonArray, NodeEvent.this::fireTaskRightClickListener);
+            } else if (type.equals("group")){
+                fireEvent(jsonArray, NodeEvent.this::fireGroupRightClickListener);
+            }
+
         });
     }
 
     public void createDragStartEvent() {
         com.vaadin.ui.JavaScript.getCurrent().addFunction(Node.ON_DRAG_START_JAVASCRIPT + this.eventId, (JavaScriptFunction) jsonArray -> {
-            fireEvent(jsonArray, NodeEvent.this::fireDragStartClickListener);
+            String type = jsonArray.getObject(0).getString("type");
+
+            if (type.equals("task")) {
+                fireEvent(jsonArray, NodeEvent.this::fireTaskDragStartClickListener);
+            } else if (type.equals("group")){
+                fireEvent(jsonArray, NodeEvent.this::fireGroupDragStartClickListener);
+            }
+
         });
     }
 
     public void createDragEndEvent() {
         com.vaadin.ui.JavaScript.getCurrent().addFunction(Node.ON_DRAG_END_JAVASCRIPT + this.eventId, (JavaScriptFunction) jsonArray -> {
-            fireEvent(jsonArray, NodeEvent.this::fireDragEndClickListener);
+            String type = jsonArray.getObject(0).getString("type");
+
+            if (type.equals("task")) {
+                fireEvent(jsonArray, NodeEvent.this::fireTaskDragEndClickListener);
+            } else if (type.equals("group")){
+                fireEvent(jsonArray, NodeEvent.this::fireGroupDragEndClickListener);
+            }
+
         });
     }
 
-
     private void fireEvent(JsonArray jsonArray, Consumer<NodeDto> fireMethod) {
-        NodeDto nodeDto = null;
-
         try {
-            nodeDto = JsonUtil.jsonToObject(jsonArray.getObject(0).toString(), NodeDto.class);
+            NodeDto nodeDto = JsonUtil.jsonToObject(jsonArray.getObject(0).toString(), NodeDto.class);
+            fireMethod.accept(nodeDto);
         } catch (Exception exception) {
             String message = "Json could'nt serialize in object: " + jsonArray.getObject(0);
             Logger.getLogger(DiagramBuilder.class.getName()).log(Level.SEVERE, message, exception);
-        }
-
-        String type = jsonArray.getObject(0).getString("type");
-
-        if (type.equals("task")) {
-            fireMethod.accept(nodeDto);
         }
     }
 
@@ -82,6 +102,17 @@ public class NodeEvent {
         taskDragEndListeners.add(listener);
     }
 
+    public void addRightClickListener(GroupRightClickListener listener) {
+        groupRightClickListeners.add(listener);
+    }
+
+    public void addGroupDragStartListener(GroupDragStartListener listener) {
+        groupDragStartListeners.add(listener);
+    }
+
+    public void addGroupDragEndListener(GroupDragEndListener listener) {
+        groupDragEndListeners.add(listener);
+    }
 
     public void fireTaskRightClickListener(NodeDto nodeDto) {
         for (TaskRightClickListener listener : taskRightClickListeners) {
@@ -89,15 +120,33 @@ public class NodeEvent {
         }
     }
 
-    public void fireDragStartClickListener(NodeDto nodeDto) {
+    public void fireTaskDragStartClickListener(NodeDto nodeDto) {
         for (TaskDragStartListener listener : taskDragStartListeners) {
-            listener.onDragStart(nodeDto);
+            listener.onTaskDragStart(nodeDto);
         }
     }
 
-    public void fireDragEndClickListener(NodeDto nodeDto) {
+    public void fireTaskDragEndClickListener(NodeDto nodeDto) {
         for (TaskDragEndListener listener : taskDragEndListeners) {
-            listener.onDragEnd(nodeDto);
+            listener.onTaskDragEnd(nodeDto);
+        }
+    }
+
+    public void fireGroupRightClickListener(NodeDto nodeDto) {
+        for (GroupRightClickListener listener : groupRightClickListeners) {
+            listener.onGroupRightClick(nodeDto);
+        }
+    }
+
+    public void fireGroupDragStartClickListener(NodeDto nodeDto) {
+        for (GroupDragStartListener listener : groupDragStartListeners) {
+            listener.onGroupDragStart(nodeDto);
+        }
+    }
+
+    public void fireGroupDragEndClickListener(NodeDto nodeDto) {
+        for (GroupDragEndListener listener : groupDragEndListeners) {
+            listener.onGroupDragEnd(nodeDto);
         }
     }
 

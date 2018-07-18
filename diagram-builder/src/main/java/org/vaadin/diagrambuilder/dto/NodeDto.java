@@ -20,4 +20,5 @@ public class NodeDto extends EventDto {
     public Double getLeft() {
         return super.getLeft();
     }
+
 }

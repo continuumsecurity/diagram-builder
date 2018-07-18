@@ -5,12 +5,12 @@
 	<groupId>org.vaadin</groupId>
 	<artifactId>diagram-builder-root</artifactId>
 	<packaging>pom</packaging>
-	<version>1.3.2</version>
+	<version>1.3.5</version>
 	<name>DiagramBuilder Add-on Root Project</name>
 
 	<modules>
 		<module>diagram-builder</module>
-		<!--<module>diagram-builder-demo</module>-->
+		<module>diagram-builder-demo</module>
 	</modules>
 
 </project>
