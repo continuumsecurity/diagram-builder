@@ -45,7 +45,7 @@
 }
 
 .diagram-node-group .diagram-node-label {
-    position: absolute;
+    position:absolute;
     width: 100%;
     top: -20px;
 }
