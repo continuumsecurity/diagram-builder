@@ -204,7 +204,7 @@
                 <version>1.6.0</version>
                 <executions>
                     <execution>
-                        <id>exec-npm-install</id>
+                        <id>Installing NPM Task</id>
                         <phase>generate-sources</phase>
                         <configuration>
                             <executable>npm</executable>
@@ -217,7 +217,7 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>exec-bower-install</id>
+                        <id>Installing Bower Task</id>
                         <phase>generate-sources</phase>
                         <configuration>
                             <executable>bower</executable>
@@ -228,6 +228,19 @@
                         <goals>
                             <goal>exec</goal>
                         </goals>
+                    </execution>
+                    <execution>
+                        <id>Build Gulp Task</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>gulp</executable>
+                            <arguments>
+                                <argument>build</argument>
+                            </arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
