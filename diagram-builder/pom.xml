@@ -220,7 +220,7 @@
                         <id>Installing Bower Task</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <executable>bower</executable>
+                            <executable>./node_modules/bower/bin/bower</executable>
                             <arguments>
                                 <argument>install</argument>
                             </arguments>
@@ -236,9 +236,22 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>gulp</executable>
+                            <executable>./node_modules/gulp/bin/gulp.js</executable>
                             <arguments>
                                 <argument>build</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Clean Gulp Task</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>./node_modules/gulp/bin/gulp.js</executable>
+                            <arguments>
+                                <argument>clean</argument>
                             </arguments>
                         </configuration>
                     </execution>
