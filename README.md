@@ -93,6 +93,9 @@ To see the demo, navigate to http://localhost:8080/
  
 ## Release notes
 
+### Version 1.4.1
+* Upgrade Vaadin version from 7.6.1 to 8.5.2
+
 ### Version 1.21
 * Upgrade Vaadin version from 7.2.0.beta1 to 7.6.1
 * Adds MouseOver custom function call over Transition
