@@ -5,13 +5,13 @@
 	<groupId>org.vaadin</groupId>
 	<artifactId>diagram-builder-demo</artifactId>
 	<packaging>war</packaging>
-    <version>1.4.0</version>
+    <version>1.4.1-SNAPSHOT</version>
 	<name>DiagramBuilder Add-on Demo</name>
     <url>https://github.com/continuumsecurity/diagram-builder</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<vaadin.version>7.6.1</vaadin.version>
+		<vaadin.version>8.5.2</vaadin.version>
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
     </properties>
         
