@@ -13,6 +13,9 @@ import org.vaadin.diagrambuilder.domain.Connector;
 import org.vaadin.diagrambuilder.domain.Node;
 import org.vaadin.diagrambuilder.domain.NodeType;
 import org.vaadin.diagrambuilder.domain.Transition;
+import org.vaadin.diagrambuilder.event.ConnectorEvent;
+import org.vaadin.diagrambuilder.event.DiagramBuilderEvent;
+import org.vaadin.diagrambuilder.event.NodeEvent;
 import org.vaadin.diagrambuilder.listener.ConnectorLeftClickListener;
 import org.vaadin.diagrambuilder.listener.ConnectorMouseOutListener;
 import org.vaadin.diagrambuilder.listener.ConnectorMouseOverListener;
@@ -29,12 +32,16 @@ import org.vaadin.diagrambuilder.listener.TaskMouseOverListener;
 import org.vaadin.diagrambuilder.listener.TaskRightClickListener;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@JavaScript("vaadin://widgetsets/app.widgetset/diagram-builder/js/diagram/alloyui/build/aui/aui-min.js")
+@JavaScript({"vaadin://widgetsets/app.widgetset/diagram-builder/js/diagram/alloyui/build/aui/aui-min.js",
+        "vaadin://widgetsets/app.widgetset/diagram-builder/js/dom-to-image/dom-to-image.min.js"})
 @StyleSheet("vaadin://widgetsets/app.widgetset/diagram-builder/alloyui-bootstrap.css")
 public class DiagramBuilder extends com.vaadin.ui.AbstractComponent {
+
+    private final String eventId = Integer.toString(this.hashCode());
 
     private NodeType[] availableFields;
     private Node[] fields;
@@ -42,12 +49,11 @@ public class DiagramBuilder extends com.vaadin.ui.AbstractComponent {
 
     private ConnectorEvent connectorEvent;
     private NodeEvent nodeEvent;
+    private DiagramBuilderEvent diagramBuilderEvent;
 
     private boolean showDeleteNodeIcon = true;
     private boolean enableDeleteByKeyStroke = true;
     private boolean moveNodeOutSideGroup = false;
-
-    private final String eventId = Integer.toString(this.hashCode());
 
     public interface StateCallback {
         public void onStateReceived(DiagramStateEvent event);
@@ -72,6 +78,9 @@ public class DiagramBuilder extends com.vaadin.ui.AbstractComponent {
     public DiagramBuilder() {
         registerRpc(rpc);
 
+        diagramBuilderEvent = new DiagramBuilderEvent(eventId);
+        diagramBuilderEvent.createExportImageEvent();
+
         connectorEvent = new ConnectorEvent(eventId);
         connectorEvent.createMouseMoveEvent();
         connectorEvent.createLeftClickEvent();
@@ -83,6 +92,12 @@ public class DiagramBuilder extends com.vaadin.ui.AbstractComponent {
         nodeEvent.createDragEndEvent();
         nodeEvent.createMouseMoveEvent();
     }
+
+
+    public void getImagePng(Consumer<byte[]> imageBytesConsumer) {
+        diagramBuilderEvent.getImagePng(imageBytesConsumer);
+    }
+
 
     public void addConnectorMouseOutListener(ConnectorMouseOutListener listener) {
         connectorEvent.addMouseOutListener(listener);
