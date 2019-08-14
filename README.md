@@ -93,6 +93,10 @@ To see the demo, navigate to http://localhost:8080/
  
 ## Release notes
 
+
+### Version 1.4.4
+* Minor fixes with RPC connection problems on a sereval calls.
+
 ### Version 1.4.3
 *  Export Diagram as PNG image
 

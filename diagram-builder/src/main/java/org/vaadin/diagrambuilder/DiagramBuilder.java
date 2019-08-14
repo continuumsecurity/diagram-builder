@@ -69,8 +69,10 @@ public class DiagramBuilder extends com.vaadin.ui.AbstractComponent {
                 value.setRawJsonString(stateJson);
                 cb.onStateReceived(value);
                 cb = null;
-            } catch (IOException ex) {
-                Logger.getLogger(DiagramBuilder.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                if(cb != null) {
+                    Logger.getLogger(DiagramBuilder.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     };
