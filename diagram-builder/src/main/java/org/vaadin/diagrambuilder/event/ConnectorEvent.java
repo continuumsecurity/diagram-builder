@@ -1,6 +1,4 @@
-package org.vaadin.diagrambuilder.event;/*
- * Copyright (c) 2012-2018 Continuum Security SLNE.  All rights reserved
- */
+package org.vaadin.diagrambuilder.event;
 
 import com.vaadin.ui.JavaScriptFunction;
 

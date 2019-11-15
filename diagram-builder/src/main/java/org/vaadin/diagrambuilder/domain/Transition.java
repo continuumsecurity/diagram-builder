@@ -12,12 +12,12 @@ public class Transition implements Serializable {
 
     private String source;
     private String target;
-    private org.vaadin.diagrambuilder.domain.Connector connector;
+    private Connector connector;
 
     public Transition() {
     }
 
-    public Transition(String source, String target, org.vaadin.diagrambuilder.domain.Connector connector) {
+    public Transition(String source, String target, Connector connector) {
         this.source = source;
         this.target = target;
         this.connector = connector;
@@ -26,13 +26,13 @@ public class Transition implements Serializable {
     public Transition(String source, String target, String connectorName) {
         this.source = source;
         this.target = target;
-        this.connector = new org.vaadin.diagrambuilder.domain.Connector(connectorName);
+        this.connector = new Connector(connectorName);
     }
 
-    public Transition(String source, String target, String connectorName, Boolean showName) {
+    public Transition(String source, String target, String connectorName, Boolean showTag) {
         this.source = source;
         this.target = target;
-        this.connector = new org.vaadin.diagrambuilder.domain.Connector(connectorName, showName);
+        this.connector = new Connector(connectorName, showTag);
     }
 
     public String getSource() {
@@ -51,7 +51,7 @@ public class Transition implements Serializable {
         this.target = target;
     }
 
-    public org.vaadin.diagrambuilder.domain.Connector getConnector() {
+    public Connector getConnector() {
         return connector;
     }
 
