@@ -1,7 +1,4 @@
 package org.vaadin.diagrambuilder.dto;
-/*
- * Copyright (c) 2012-2018 Continuum Security SLNE.  All rights reserved
- */
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
