@@ -4,6 +4,8 @@ package org.vaadin.diagrambuilder.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Connector details.
@@ -20,7 +22,9 @@ public class Connector implements Serializable {
     private String onMouseMove;
     private String onRightClick;
     private String onLeftClick;
-    private Boolean showName = true;
+
+    private List<String> tags = new ArrayList<>();
+    private Boolean showTag = true;
 
     public Connector() {
     }
@@ -29,9 +33,16 @@ public class Connector implements Serializable {
         this.name = name;
     }
 
-    public Connector(String name, Boolean showName) {
+    public Connector(String name, Boolean showTag) {
         this.name = name;
-        this.showName = showName;
+        this.tags.add(name);
+        this.showTag = showTag;
+    }
+
+    public Connector(String name, List<String> tags, Boolean showTag) {
+        this.name = name;
+        this.tags = tags;
+        this.showTag = showTag;
     }
 
     public Long getId() {
@@ -48,6 +59,14 @@ public class Connector implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public String getOnMouseMove() {
@@ -75,10 +94,18 @@ public class Connector implements Serializable {
     }
 
     public Boolean getShowName() {
-        return showName;
+        return showTag;
     }
 
     public void setShowName(Boolean showName) {
-        this.showName = showName;
+        this.showTag = showName;
+    }
+
+    public Boolean getShowTag() {
+        return showTag;
+    }
+
+    public void setShowTag(Boolean showTag) {
+        this.showTag = showTag;
     }
 }
