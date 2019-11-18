@@ -13,6 +13,6 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "alloy-ui": "continuum-alloy-ui#370f76c6b1f09d3da6cc3b92882ef1611b7310c3"
+    "alloy-ui": "continuum-alloy-ui#^4.2.0"
   }
 }
